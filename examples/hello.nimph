@@ -1,0 +1,32 @@
+(package hello
+	(using "std" "html" "js"))
+
+(var funRanCount 0)
+
+(fun funRanCount []
+	(set funRanCount (++ funRanCount)))
+
+
+(var js-log `(fun log [message]
+	`(console.log message)
+	`(console.log "That was from \"Javascript, and single-quote ' test")
+	`(console.log 'Testing single-quote \' and escape " and double-quote')
+	(foreach i (range 10)
+		`(console.log (concat "log line: " i))
+		)
+	)
+)
+	
+	
+(html 5
+	(head
+		(title "Test title")
+		(meta ("name" "description") ("content" "The description of this page"))
+		(include "somefile/in/the/project.nimph")
+		(static-include "textfile/to/output/in/place.txt")
+	)
+	
+	(body
+		(h1 "Under Construction!")
+	)
+)
