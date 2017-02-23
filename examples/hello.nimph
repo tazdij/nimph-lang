@@ -3,8 +3,20 @@
 
 (var funRanCount 0)
 
-(fun funRanCount []
-	(set funRanCount (++ funRanCount)))
+(fun funRanCount [] {
+		(set funRanCount (++ funRanCount))
+	})
+
+
+(fun max [a b] {
+	(if (> a b) {
+		
+	}{
+		
+	})
+})
+
+		
 
 
 (var js-log `(fun log [message]

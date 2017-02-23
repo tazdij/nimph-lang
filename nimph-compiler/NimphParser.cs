@@ -17,11 +17,11 @@ namespace nimph_compiler
             Literal
         }
 
-        private TokenDFA tdfa;
+        private TokenSA tsa;
 
         public NimphParser()
         {
-            TokenDFA.Comparator cmp = new TokenDFA.Comparator(TokenDFA.Comparator.Polarity.IsIn, new List<string> { "LPAREN" });
+            TokenSA.Comparator cmp = new TokenSA.Comparator(TokenSA.Comparator.Polarity.IsIn, new List<string> { "LPAREN" });
         }
 
         public void TokenStreamToAST(List<CharDFA.Token> stream)

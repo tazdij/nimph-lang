@@ -71,11 +71,11 @@ namespace nimph_compiler
             CharDFA.State sta_symbol_start = cdfa.NewState("symbol_start");
             CharDFA.State sta_symbol_chars = cdfa.NewState("symbol_chars");
             CharDFA.State sta_symbol_end = cdfa.NewState("symbol_end", "SYMBOL");
-            sta_start.NewDelta("start_to_symbol", "[a-zA-Z_\\+\\-\\/]", sta_symbol_start);
-            sta_symbol_start.NewDelta("symbol_start_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.]", sta_symbol_chars);
-            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.]", sta_symbol_chars);
-            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.]", sta_symbol_end, false, false);
-            sta_symbol_start.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.]", sta_symbol_end, false, false);
+            sta_start.NewDelta("start_to_symbol", "[a-zA-Z_\\+\\-\\/\\=\\>\\<]", sta_symbol_start);
+            sta_symbol_start.NewDelta("symbol_start_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_chars);
+            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_chars);
+            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_end, false, false);
+            sta_symbol_start.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_end, false, false);
 
             // Parse string
             CharDFA.State sta_string_dq_start = cdfa.NewState("string_dq_start");

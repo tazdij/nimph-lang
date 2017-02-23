@@ -5,7 +5,8 @@ using System.Text;
 
 namespace nimph_compiler
 {
-    class TokenDFA
+    /* Token Stack Automaton */
+    class TokenSA
     {
 
         public class Node
@@ -114,22 +115,22 @@ namespace nimph_compiler
             {
                 foreach (Delta delta in _deltas)
                 {
-                    if (delta.IsMatch(character))
+                    /*if (delta.IsMatch(character))
                     {
                         return true;
-                    }
+                    }*/
                 }
 
                 return false;
             }
 
-            public char? AcceptToken(CharDFA.Token character, out State next_state, out bool advance)
+            public Node AcceptToken(CharDFA.Token character, out State next_state, out bool advance)
             {
                 next_state = null;
                 advance = false;
                 foreach (Delta delta in _deltas)
                 {
-                    if (delta.IsMatch(character))
+                    /*if (delta.IsMatch(character))
                     {
                         next_state = delta.to_state;
 
@@ -139,7 +140,7 @@ namespace nimph_compiler
                             return null;
 
                         return character;
-                    }
+                    }*/
                 }
 
                 return null;
@@ -150,5 +151,7 @@ namespace nimph_compiler
         private Dictionary<string, State> _states;
         private State _activeState = null;
         private State _startState = null;
+
+        private Node root = null;
     }
 }
