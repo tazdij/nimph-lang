@@ -23,8 +23,14 @@ namespace nimph_compiler
             
             foreach (CharDFA.Token token in tokens)
             {
-                Console.WriteLine(token.name + ": " + token.value);
+                Console.WriteLine("<" + token.name + ", " + token.value + ">");
             }
+
+            NimphParser parser = new NimphParser();
+            TokenSA.Node ast = parser.TokenStreamToAST(tokens);
+
+            // Create the VM
+            // Pass ast to VM
 
             Console.WriteLine("Press any key to end.");
             Console.ReadKey();

@@ -21,14 +21,15 @@ namespace nimph_compiler
 
         public NimphParser()
         {
-            TokenSA.Comparator cmp = new TokenSA.Comparator(TokenSA.Comparator.Polarity.IsIn, new List<string> { "LPAREN" });
+            tsa = new TokenSA();
+            //TokenSA.Comparator cmp = new TokenSA.Comparator(TokenSA.Comparator.Polarity.IsIn, new List<string> { "LPAREN" });
         }
 
-        public void TokenStreamToAST(List<CharDFA.Token> stream)
+        public TokenSA.Node TokenStreamToAST(List<CharDFA.Token> stream)
         {
+            TokenSA.Node ast = tsa.ProcessTokens(stream);
 
-
-
+            return ast;
         }
 
 

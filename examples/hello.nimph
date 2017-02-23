@@ -10,9 +10,9 @@
 
 (fun max [a b] {
 	(if (> a b) {
-		
+		a
 	}{
-		
+		b
 	})
 })
 
@@ -35,7 +35,7 @@
 		(title "Test title")
 		(meta ("name" "description") ("content" "The description of this page"))
 		(include "somefile/in/the/project.nimph")
-		(static-include "textfile/to/output/in/place.txt")
+		(text-include "textfile/to/output/in/place.txt")
 	)
 	
 	(body
