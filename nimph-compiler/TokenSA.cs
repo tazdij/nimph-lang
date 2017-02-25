@@ -9,9 +9,11 @@ namespace nimph_compiler
     class TokenSA
     {
 
+        public delegate bool CallbackTokenHandler(Node node, TokenStreamer stream);
+
         public class Node
         {
-            public int? node_type;
+            public string node_type;
             public List<Node> children;
             public CharDFA.Token? token;
 
@@ -54,7 +56,7 @@ namespace nimph_compiler
             }
         }
 
-        public delegate Node CallbackTokenHandler(CharDFA.Token token, TokenStreamer stream);
+        
 
         public class TokenStreamer
         {
@@ -143,7 +145,27 @@ namespace nimph_compiler
         private Dictionary<string, CallbackTokenHandler> _tokenProductions;
         public void RegisterHandler(string token_name, CallbackTokenHandler handler)
         {
+            _tokenProductions.Add(token_name, handler);
+        }
 
+        public Node ProcessNext()
+        {
+            CharDFA.Token? token = _stream.Next();
+
+            if (!token.HasValue)
+                return null;
+
+            Node node = new Node();
+            node.token = token.Value;
+
+            if (_tokenProductions.ContainsKey(token.Value.name))
+            {
+                PushNode(node);
+                _tokenProductions[token.Value.name](node, _stream);
+                PopNode();
+            }
+
+            return node;
         }
 
         private void Process(Node parent)
@@ -157,20 +179,14 @@ namespace nimph_compiler
                 // return if stream has ended
                 if (token == null) break;
 
+
                 Node node = new Node();
                 node.token = token.Value;
 
-                // Check if we need to recurse
-                if (token.Value.name == "LPAREN" || token.Value.name == "LBRACKET" || token.Value.name == "LBRACE")
-                {
-                    // Recurse if opening command
+                if (_tokenProductions.ContainsKey(token.Value.name)){
                     PushNode(node);
-                    Process(node);
+                    _tokenProductions[token.Value.name](node, _stream);
                     PopNode();
-                }
-                else if (token.Value.name == "RPAREN" || token.Value.name == "RBRACKET" || token.Value.name == "RBRACE")
-                {
-                    break;
                 }
 
                 parent.children.Add(node);

@@ -23,7 +23,7 @@ namespace nimph_compiler
             
             foreach (CharDFA.Token token in tokens)
             {
-                Console.WriteLine("<" + token.name + ", " + token.value + ">");
+                Console.WriteLine(token.name + ", " + token.value);
             }
 
             NimphParser parser = new NimphParser();

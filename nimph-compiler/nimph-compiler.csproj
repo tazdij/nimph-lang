@@ -58,6 +58,7 @@
     <Compile Include="CharDFA.cs" />
     <Compile Include="NimphLexer.cs" />
     <Compile Include="NimphParser.cs" />
+    <Compile Include="NimphVM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TokenSA.cs" />

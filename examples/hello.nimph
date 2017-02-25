@@ -19,7 +19,7 @@
 		
 
 
-(var js-log `(fun log [message]
+`(fun log [message]
 	`(console.log message)
 	`(console.log "That was from \"Javascript, and single-quote ' test")
 	`(console.log 'Testing single-quote \' and escape " and double-quote')
@@ -27,7 +27,6 @@
 		`(console.log (concat "log line: " i))
 		)
 	)
-)
 	
 	
 (html 5
