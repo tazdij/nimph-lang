@@ -19,6 +19,10 @@ namespace nimph_compiler
             // Ignore whitespace
             sta_start.NewDelta("white_space", "[\\r\\n\\t\\ \x03]", sta_start, false, true);
 
+            // Parse Comments
+            //CharDFA.State sta_comment_start = cdfa.NewState("comment");
+            //CharDFA.State sta_comment = cdfa.NewState("comment", "COMMMENT");
+
             // Parse Subtract, can turn into a negative number if followed by any digit
             CharDFA.State sta_subtract = cdfa.NewState("subtract", "SUBTRACT");
             sta_start.NewDelta("start_to_subtract", "[\\-]", sta_subtract);
@@ -72,16 +76,18 @@ namespace nimph_compiler
             CharDFA.State sta_symbol_chars = cdfa.NewState("symbol_chars");
             CharDFA.State sta_symbol_end = cdfa.NewState("symbol_end", "SYMBOL");
             sta_start.NewDelta("start_to_symbol", "[a-zA-Z_\\+\\-\\/\\=\\>\\<]", sta_symbol_start);
-            sta_symbol_start.NewDelta("symbol_start_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_chars);
-            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_chars);
-            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_end, false, false);
-            sta_symbol_start.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<]", sta_symbol_end, false, false);
+            sta_symbol_start.NewDelta("symbol_start_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<\\#]", sta_symbol_chars);
+            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_chars", "[a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<\\#]", sta_symbol_chars);
+            sta_symbol_chars.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<\\#]", sta_symbol_end, false, false);
+            sta_symbol_start.NewDelta("symbol_chars_to_symbol_end", "[^a-zA-Z_\\+\\-0-9\\/\\.\\=\\>\\<\\#]", sta_symbol_end, false, false);
 
-            // Parse string
+            // Parse strings
+            // Double Quote String and Single Quote Strings are different
+            // Double quoted strings are always escaped?
             CharDFA.State sta_string_dq_start = cdfa.NewState("string_dq_start");
             CharDFA.State sta_string_dq_chars = cdfa.NewState("string_dq_chars");
             CharDFA.State sta_string_dq_escape = cdfa.NewState("string_dq_escape");
-            CharDFA.State sta_string_dq_end = cdfa.NewState("string_dq_end", "STRING");
+            CharDFA.State sta_string_dq_end = cdfa.NewState("string_dq_end", "DSTRING");
 
             sta_start.NewDelta("start_to_string_dq_start", "[\\\"]", sta_string_dq_start, false);
             sta_string_dq_start.NewDelta("string_dq_start_to_string_dq_chars", "[^\\\"\\\\]", sta_string_dq_chars);
@@ -95,7 +101,7 @@ namespace nimph_compiler
             CharDFA.State sta_string_sq_start = cdfa.NewState("string_sq_start");
             CharDFA.State sta_string_sq_chars = cdfa.NewState("string_sq_chars");
             CharDFA.State sta_string_sq_escape = cdfa.NewState("string_sq_escape");
-            CharDFA.State sta_string_sq_end = cdfa.NewState("string_sq_end", "STRING");
+            CharDFA.State sta_string_sq_end = cdfa.NewState("string_sq_end", "SSTRING");
 
             sta_start.NewDelta("start_to_string_sq_start", "[\\']", sta_string_sq_start, false);
             sta_string_sq_start.NewDelta("string_sq_start_to_string_sq_chars", "[^\\'\\\\]", sta_string_sq_chars);
