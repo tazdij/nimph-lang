@@ -1,0 +1,16 @@
+; Nimph VM Bytecode Example & Sample File
+
+; NimphVM is Stack Based (possibly more than one?)
+; It has multiple registers for tracking purposes.
+;
+; Registers:
+;   SP = Stack Pointer
+;   IP = Instruction Pointer
+;   RP = Return Pointer
+;
+; Register Uses:
+;   SP (Stack Pointer) always points to the top of the stack
+;   
+
+
+
